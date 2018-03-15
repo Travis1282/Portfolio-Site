@@ -15,21 +15,23 @@ let		typeSpeed = 1, //in milliseconds
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function() {
     if (xhr.readyState == XMLHttpRequest.DONE) {
-        	retured = JSON.parse(xhr.responseText)
+    	retured = JSON.parse(xhr.responseText)
+
         ip = retured.ip
-
 		today = new Date()
-		console.log(today)
-		today.setTime(today.getTime() + 31600000000);
-		console.log(today)
 
+        if ((document.cookie) == ''){ /// if there is no cookie
+        	 firstPrint = 'Last login: '+ (today.toGMTString().slice(0,-3)) +' on ' +ip;
+        }	
+
+		today.setTime(today.getTime() + 31600000000);
 		const expires = "; expires=" + today.toGMTString();
 		console.log(cookie = 'name	='+ ip + expires+";")
        	document.cookie = 'name	='+ ip + expires+";";
        	// savedCookie = document.cookie
-       	console.log(document.cookie)
+       	draw();
 
-        draw();
+
     }
 }
 
@@ -59,6 +61,7 @@ terminalWindow.style.transform = 'translate(0, 20px, 0 20px)';
 const terminal = document.createElement('div'); // create terminal window where the text lives
 terminalWindow.appendChild(terminal);
 terminal.style.fontFamily = "'Courier New', Courier, monospace";
+terminal.style.fontSize = '16px';
 terminal.style.color = 'white';
 terminal.style.zIndex = '1'
 terminal.style.position = 'relative';
@@ -100,6 +103,26 @@ const printChar = (text)=>{
   };
 
 
+//////////////// INITIALIZE INTODUCTORY WINDOW MESSAGE ////////////////
+
+function draw() {
+			console.log(firstPrint)
+
+    setTimeout(function() {
+        requestAnimationFrame(draw);
+		if (waiting == false) printChar(intro);
+
+			else { 	
+			speed = 500;
+			blinker.style.visibility = (blink = !blink) ? 'hidden' :  'visible' ; // blink the cursor 
+			
+		}
+
+    }, speed);
+}
+ 
+
+
  ////////////// CALCULATE NAVIGATION ////////////
 
 // const calcNav = () => {
@@ -129,21 +152,6 @@ const printChar = (text)=>{
 //   };
 // calcNav()
 
-//////////////// INITIALIZE INTODUCTORY WINDOW MESSAGE ////////////////
-
-function draw() {
-    setTimeout(function() {
-        requestAnimationFrame(draw);
-		if (waiting == false) printChar(intro);
-			else { 	
-			speed = 500;
-			blinker.style.visibility = (blink = !blink) ? 'hidden' :  'visible' ; // blink the cursor 
-			
-		}
-
-    }, speed);
-}
- 
 
 
 

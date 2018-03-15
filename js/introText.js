@@ -1,4 +1,6 @@
-const intro = "Hello My name is Travis Clark. I'm a web engineer based in Chicago Il."
+
+let firstPrint = ''
+const intro = "Travis-Clark-:WebDev-Pro-3: travisclark$"
 
 
 //                       
