@@ -89,7 +89,11 @@ const printChar = (text)=>{
 	}else if (textArray.length >= typerCounter){ // adds text 
 		if (textArray[typerCounter] == ' '){// handle spaces
 				terminal.innerText += '\u00A0'; 
-			}else if (textArray[typerCounter] != null ){// inputs text to dom 
+			}else if (textArray[typerCounter] == '¶'){
+					 	lineLength = 0;
+					 	terminal.innerText += '\n';
+			}
+			else if(textArray[typerCounter] != null ){// inputs text to dom 
 				terminal.innerText += textArray[typerCounter];
 				blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
 
@@ -108,7 +112,6 @@ const printChar = (text)=>{
 //////////////// TEXT PRINT ANIMATION FUNCTION ////////////////
 
 function draw() {
-
     setTimeout(function() {
         requestAnimationFrame(draw);
 		if (waiting == false) printChar(text);

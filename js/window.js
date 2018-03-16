@@ -6,6 +6,7 @@
 
 		doToggle: function(e) {
 			// if (e != '') e.preventDefault();
+			window.addEventListener('keydown', keydown);
 			this.navToggle.classList.toggle('expanded')
 			this.nav.classList.toggle('expanded');
 		}
