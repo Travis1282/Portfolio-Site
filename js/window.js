@@ -1,16 +1,17 @@
-(function() {
 
-	var hamburger = {
+
+	let iframeActivate = {
 		navToggle: document.querySelector('.nav-toggle'),
 		nav: document.querySelector('nav'),
 
 		doToggle: function(e) {
-			e.preventDefault();
+			// if (e != '') e.preventDefault();
 			this.navToggle.classList.toggle('expanded')
 			this.nav.classList.toggle('expanded');
 		}
 	};
 
-	hamburger.navToggle.addEventListener('click', function(e) { hamburger.doToggle(e); });
+(function() {
+	iframeActivate.navToggle.addEventListener('click', function(e) { iframeActivate.doToggle(e); });
 
 }());

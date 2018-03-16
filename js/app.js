@@ -7,7 +7,7 @@ let		typeSpeed = 1, //in milliseconds
 		speed = 0,
 		waiting = false,
 		blink = true,
-		navagation = false;
+		text = '';
 
 
 //////////////// GET THE IP ADDRESS OF THE VISITOR, ADD A COOKIE AND GET THEIR LAST LOGIN ////////////////
@@ -16,18 +16,21 @@ const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function() {
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	retured = JSON.parse(xhr.responseText)
-
+    	console.log(retured)
         ip = retured.ip
 		today = new Date()
-
+		console.log(document.cookie)
         if ((document.cookie) == ''){ /// if there is no cookie
-        	 firstPrint = 'Last login: '+ (today.toGMTString().slice(0,-3)) +' on ' +ip;
-        }	
-
+        	 text = 'First login: '+ (today.toGMTString().slice(0,-3)) +' on ' +ip;
+        }else{
+		    var decodedCookie = decodeURIComponent(document.cookie);
+		    var ca = decodedCookie.split(';');
+		    text = 'Last login: '+ (ca[1].replace("name=", ""));
+		}	
+		now = today.toGMTString().slice(0,-3)
 		today.setTime(today.getTime() + 31600000000);
 		const expires = "; expires=" + today.toGMTString();
-		console.log(cookie = 'name	='+ ip + expires+";")
-       	document.cookie = 'name	='+ ip + expires+";";
+       	document.cookie = 'name	='+ now +' on '+ip + expires+";";
        	// savedCookie = document.cookie
        	draw();
 
@@ -37,7 +40,6 @@ xhr.onreadystatechange = function() {
 
 xhr.open('GET', 'https://freegeoip.net/json/', true);
 xhr.send(null); 
-
 
 
 
@@ -103,15 +105,13 @@ const printChar = (text)=>{
   };
 
 
-//////////////// INITIALIZE INTODUCTORY WINDOW MESSAGE ////////////////
+//////////////// TEXT PRINT ANIMATION FUNCTION ////////////////
 
 function draw() {
-			console.log(firstPrint)
 
     setTimeout(function() {
         requestAnimationFrame(draw);
-		if (waiting == false) printChar(intro);
-
+		if (waiting == false) printChar(text);
 			else { 	
 			speed = 500;
 			blinker.style.visibility = (blink = !blink) ? 'hidden' :  'visible' ; // blink the cursor 
@@ -122,8 +122,32 @@ function draw() {
 }
  
 
+//////////////// INITIALIZE TEXT TO BE PRINTED ////////////////
 
- ////////////// CALCULATE NAVIGATION ////////////
+
+// const navagation = () => {
+// 		console.log(intro)
+// 		text = intro; 
+// 		waiting = false
+// 		speed = 10; 
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ////////////// Acsii art  ////////////
 
 // const calcNav = () => {
 // 	let printableString = ''
