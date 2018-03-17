@@ -7,7 +7,8 @@ let		typeSpeed = 1, //in milliseconds
 		speed = 0,
 		waiting = false,
 		blink = true,
-		text = '';
+		text = '',
+		nextLoad = '';
 
 
 //////////////// GET THE IP ADDRESS OF THE VISITOR, ADD A COOKIE AND GET THEIR LAST LOGIN ////////////////
@@ -21,20 +22,18 @@ xhr.onreadystatechange = function() {
 		today = new Date()
 		console.log(document.cookie)
         if ((document.cookie) == ''){ /// if there is no cookie
-        	 text = 'First login: '+ (today.toGMTString().slice(0,-3)) +' on ' +ip;
+        	 text = 'First login: '+ (today.toGMTString().slice(0,-3)) +' on ' +ip+'¶';
         }else{
 		    var decodedCookie = decodeURIComponent(document.cookie);
 		    var ca = decodedCookie.split(';');
-		    text = 'Last login: '+ (ca[1].replace("name=", ""));
+		    text = 'Last login:'+ (ca[1].replace("name=", "")+'¶');
 		}	
 		now = today.toGMTString().slice(0,-3)
 		today.setTime(today.getTime() + 31600000000);
 		const expires = "; expires=" + today.toGMTString();
-       	document.cookie = 'name	='+ now +' on '+ip + expires+";";
-       	// savedCookie = document.cookie
+       	document.cookie = 'name	='+ now +'on '+ip + expires+";";
        	draw();
-
-
+       	nextLoad = intro;
     }
 }
 
@@ -79,8 +78,8 @@ blinker.style.position = 'relative';
 
 //////////////// SET TYPE IN AVAILALBE WINDOW ////////////////
 
-const printChar = (text)=>{
-  	let textArray =  text.split('') 
+const printChar = (charicters)=>{
+  	let textArray =  charicters.split('') 
 	if (Math.floor(brouserWidth) < lineLength){ // inserts a return at the end of the window 
 	 	terminal.innerText += '\n';
 	 	numberOfLines++ ;
@@ -89,18 +88,22 @@ const printChar = (text)=>{
 	}else if (textArray.length >= typerCounter){ // adds text 
 		if (textArray[typerCounter] == ' '){// handle spaces
 				terminal.innerText += '\u00A0'; 
-			}else if (textArray[typerCounter] == '¶'){
-					 	lineLength = 0;
-					 	terminal.innerText += '\n';
+			}else if (textArray[typerCounter] === '¶'){
+			 	numberOfLines++ ;
+			 	lineLength = 0;				
+			 	blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
+			 	terminal.innerText += '\n';
 			}
 			else if(textArray[typerCounter] != null ){// inputs text to dom 
 				terminal.innerText += textArray[typerCounter];
 				blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
 
-			}else  { // end of input 
-					lineLength--
-				  	//blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)'
-					waiting = true;
+			}else  { // end of inputsut 
+				navagation()   
+				// text = nextLoad
+				typerCounter = -1
+				lineLength--
+				console.log(text)
 			}
 			lineLength++ ; 
 			typerCounter++ ;
@@ -114,8 +117,10 @@ const printChar = (text)=>{
 function draw() {
     setTimeout(function() {
         requestAnimationFrame(draw);
-		if (waiting == false) printChar(text);
-			else { 	
+		if (waiting === false) {
+			printChar(text)
+		}else{ 
+			// console.log(waiting)
 			speed = 500;
 			blinker.style.visibility = (blink = !blink) ? 'hidden' :  'visible' ; // blink the cursor 
 			
@@ -125,16 +130,35 @@ function draw() {
 }
  
 
+
+
+// const loadOrder = {
+// 	1:intro, 
+// 	2:shellInstructions
+// }
+
 //////////////// INITIALIZE TEXT TO BE PRINTED ////////////////
 
 
-// const navagation = () => {
-// 		console.log(intro)
-// 		text = intro; 
-// 		waiting = false
-// 		speed = 10; 
+const navagation = () => {
+	if (nextLoad == intro){
+		text = intro; 
+		console.log(text)
+	    waiting = false;
+	    speed = 1;
+	    nextLoad = shellInstructions
+	}else if(nextLoad == shellInstructions){
+		text = nextLoad; 
+		console.log(text)
+	    waiting = false;
+	    speed = 1;
+	    nextLoad = 'stop'
+	}else if(nextLoad == 'stop'){
+		waiting = true
+	}
+}
 
-// }
+
 
 
 

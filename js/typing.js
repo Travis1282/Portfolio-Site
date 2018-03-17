@@ -7,37 +7,49 @@ keyCodeToChar = {8:"Backspace",13:"Enter",46:"Delete",48:"0",49:"1",50:"2",51:"3
 let typed = '';
 
 function keydown(e) {
-
     if(keyCodeToChar[e.which] == 'Enter'){
       registernewSubmittion(typed)
+      typed += keyCodeToChar[e.which]
       typed = '';
 
-    }else if (keyCodeToChar[e.which] == 'Backspace'){
-      terminal.innerText = terminal.innerText.slice(0, -1);
-      lineLength--
-      if (lineLength < 1) lineLength = Math.floor(brouserWidth);
-      blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
-      console.log ('BW: ',brouserWidth,'NOL: ', numberOfLines, 'LL: ',lineLength)
-    } else if (keyCodeToChar[e.which] != null){
+    }else if (keyCodeToChar[e.which] == 'Backspace' && lineLength >= 1){
+      if (lineLength >= 1){
+          terminal.innerText = terminal.innerText.slice(0, -1);
+          lineLength--
+          typed = typed.slice(0, -1)
+          blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)'
+
+      }
+      console.log ('NOL: ', numberOfLines, 'LL: ',lineLength)
+    } else{ if (keyCodeToChar[e.which] != null){
         speed = 10;
         typed+=keyCodeToChar[e.which]
+                typerCounter = 0;
+
         printChar(keyCodeToChar[e.which]);
         console.log(keyCodeToChar[e.which])
-        typerCounter = 0;
       }
+  }
+
 }
-
-
 
 
 const registernewSubmittion = (submission) => {
   console.log(submission)
-  if(submission == 'bird-city'){
+  if(submission == 'whirr'){
+    iframe.src = 'https://ancient-sands-71956.herokuapp.com/';
+    text = '¶loading '+ submission +'.....';
+    loadNewResource()
+  }else if(submission == 'broker-branded-search'){
+    iframe.src = 'https://dry-brushlands-58363.herokuapp.com/user/login';
+    text = '¶loading '+ submission +'.....';
+    loadNewResource()
+  }else if(submission == 'bird-city'){
     iframe.src = 'https://travis1282.github.io/First-Game-Project-/Bird%20City/';
     text = '¶loading '+ submission +'.....';
     loadNewResource()
-    } else {
-      text = "¶\'"+ submission+"\' is not a command"
+   }else{
+      text = "¶\'"+ submission+"\' is not a command¶"
       speed = 1;
       waiting = false;
       draw();
@@ -52,7 +64,7 @@ const loadNewResource = () =>{
     draw();
     let  iframeDoc = iframe.contentDocument || iframe.contentWindow.document;     // Check if loading is complete
     if (  iframeDoc.readyState  == 'complete' ) {
-              setTimeout(function() {iframeActivate.doToggle();}, 2000);//wait one second before opening flyin window
+              setTimeout(function() {iframeActivate.doToggle()}, 2000);//wait one second before opening flyin window
         }
 }
 

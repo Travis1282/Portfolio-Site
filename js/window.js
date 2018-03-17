@@ -6,13 +6,14 @@
 
 		doToggle: function(e) {
 			// if (e != '') e.preventDefault();
-			window.addEventListener('keydown', keydown);
 			this.navToggle.classList.toggle('expanded')
 			this.nav.classList.toggle('expanded');
 		}
 	};
 
 (function() {
-	iframeActivate.navToggle.addEventListener('click', function(e) { iframeActivate.doToggle(e); });
+	iframeActivate.navToggle.addEventListener('click', function(e) { 
+		window.addEventListener('keydown', keydown);
+		iframeActivate.doToggle(e); });
 
 }());
