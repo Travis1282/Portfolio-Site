@@ -34,22 +34,33 @@ function keydown(e) {
 }
 
 
+
 const registernewSubmittion = (submission) => {
   console.log(submission)
-  if(submission == 'whirr'){
-    iframe.src = 'https://ancient-sands-71956.herokuapp.com/';
-    text = '¶loading '+ submission +'.....';
+  if(submission == 'git'){
+      let win = window.open('https://github.com/Travis1282/', '_blank');
+      win.focus();
+      text = 'openining...¶¶';
+      draw()
+  }else if(submission == 'linkedin'){
+      let win = window.open('https://www.linkedin.com/in/travis-clark/', '_blank');
+      win.focus();
+      text = 'openining...¶¶';
+      draw()
+  }else if(submission == 'whirr'){
+    iframe.src = 'http://whirr-login.herokuapp.com/';
+    text = '¶¶loading '+ submission +'.....¶¶';
     loadNewResource()
-  }else if(submission == 'broker-branded-search'){
-    iframe.src = 'https://dry-brushlands-58363.herokuapp.com/user/login';
-    text = '¶loading '+ submission +'.....';
+  }else if(submission == 'agent-link'){
+    iframe.src = 'http://realestateleadgenerator.herokuapp.com';
+    text = '¶¶loading '+ submission +'.....¶¶';
     loadNewResource()
   }else if(submission == 'bird-city'){
-    iframe.src = 'https://travis1282.github.io/First-Game-Project-/Bird%20City/';
-    text = '¶loading '+ submission +'.....';
+    iframe.src = 'https://travis1282.github.io/Bird-City/';
+    text = '¶¶loading '+ submission +'.....¶¶';
     loadNewResource()
    }else{
-      text = "¶\'"+ submission+"\' is not a command¶"
+      text = "¶¶\'"+ submission+"\' is not a command¶¶"
       speed = 1;
       waiting = false;
       draw();
@@ -62,10 +73,8 @@ const loadNewResource = () =>{
     waiting = false;
     speed = 1;
     draw();
-    let  iframeDoc = iframe.contentDocument || iframe.contentWindow.document;     // Check if loading is complete
-    if (  iframeDoc.readyState  == 'complete' ) {
-              setTimeout(function() {iframeActivate.doToggle()}, 2000);//wait one second before opening flyin window
-        }
+    setTimeout(function() {iframeActivate.doToggle()}, 2000);//wait one second before opening flyin window
+        
 }
 
 

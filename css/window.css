@@ -55,7 +55,7 @@ a {
     user-select: none;
     cursor: pointer;
     height: 60px;
-    left: -12px;
+    left: -20px;
     position: fixed;
     top: calc(50% - 33px);
     width: 33px;
@@ -149,7 +149,7 @@ a {
   -ms-transition: right 0.5s ease;
   -o-transition: right 0.5s ease;
   transition: right 0.5s ease;
-  background: #28dde0;
+  background: white;
   color: white;
   cursor: pointer;
   font-size: 2rem;

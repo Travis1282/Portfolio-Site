@@ -4,7 +4,7 @@ let		typeSpeed = 1, //in milliseconds
 		lineLength = 0, // keep track of printed text length on each line
 		numberOfLines = 0, // keep track of printed lines 
 		typerCounter = 0, // for iterating over the text arrays
-		speed = 0,
+		speed = 1,
 		waiting = false,
 		blink = true,
 		text = '',
@@ -66,6 +66,8 @@ terminal.style.fontSize = '16px';
 terminal.style.color = 'white';
 terminal.style.zIndex = '1'
 terminal.style.position = 'relative';
+terminal.style.wordWrap ='break-word';
+
 
 let blinker = document.createElement('div'); /// create the blinker for the text input area
 terminalWindow.appendChild(blinker);
@@ -80,12 +82,13 @@ blinker.style.position = 'relative';
 
 const printChar = (charicters)=>{
   	let textArray =  charicters.split('') 
-	if (Math.floor(brouserWidth) < lineLength){ // inserts a return at the end of the window 
-	 	terminal.innerText += '\n';
-	 	numberOfLines++ ;
-	 	lineLength = 0;
+	// if (Math.floor(brouserWidth) < lineLength){ // inserts a return at the end of the window 
+	//  	terminal.innerText += '\n';
+	//  	numberOfLines++ ;
+	//  	lineLength = 0;
 
-	}else if (textArray.length >= typerCounter){ // adds text 
+	// }else 
+	if (textArray.length >= typerCounter){ // adds text 
 		if (textArray[typerCounter] == ' '){// handle spaces
 				terminal.innerText += '\u00A0'; 
 			}else if (textArray[typerCounter] === '¶'){
@@ -143,16 +146,22 @@ function draw() {
 const navagation = () => {
 	if (nextLoad == intro){
 		text = intro; 
-		console.log(text)
+		console.log(text);
 	    waiting = false;
 	    speed = 1;
-	    nextLoad = shellInstructions
+	    nextLoad = about
+	}else if(nextLoad == about){
+		text = nextLoad; 
+		console.log(text);
+	    waiting = false;
+	    speed = 1;
+	    nextLoad = shellInstructions;
 	}else if(nextLoad == shellInstructions){
 		text = nextLoad; 
-		console.log(text)
+		console.log(text);
 	    waiting = false;
 	    speed = 1;
-	    nextLoad = 'stop'
+	    nextLoad = 'stop';
 	}else if(nextLoad == 'stop'){
 		waiting = true
 	}

@@ -1,4 +1,5 @@
 
 let firstPrint = ''
-const intro = "Travis-Clark-:WebDev-Pro-3: travisclark$¶"
-const shellInstructions ="usage: git [--version] [--help] [-C <path>] [-c name=value]¶           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]¶           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]¶           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]¶           <command> [<args>]"
+const intro = "Travis-Clark-:WebDev-Pro-3: travisclark$¶¶"
+const about = "Hi, I'm Travis Clark. I'm a designer/developer from Chicago. A life-long learner and maker at heart, I’m able to endlessly satisfy both passions with code.  My experience as  designer and project manager adds a layer of unique problem solving that helps me write usefull and beautifull applicaions.¶¶Don't be shy, lets chat: 773.587.2114, travisjosephclark@gmail.com¶¶"
+const shellInstructions ="navigate using typed commands:¶¶  contact:¶     git            -check out my code ¶     linkedin       -send me a connection request ¶¶  portfolio: ¶     sqftchicago    -watch the price per square foot of property sales change over time on an interactive map ¶     whirr          -manage your waterfall projects with this visual time based task tracker ¶     agent-link     -search for properties in chicago and request showings directly alerting your agent ¶     bird-city      -steer a flock of birds around a city avoiding buildings to eat bugs¶¶" 
