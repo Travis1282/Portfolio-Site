@@ -2,7 +2,7 @@ window.addEventListener('keydown', keydown);
 // const iframe = document.getElementsById('iframe');
 const iframe = document.getElementById('iframe')
 
-keyCodeToChar = {8:"Backspace",13:"Enter",46:"Delete",48:"0",49:"1",50:"2",51:"3",52:"4",53:"5",54:"6",55:"7",56:"8",57:"9",65:"a",66:"b",67:"c",68:"d",69:"e",70:"f",71:"g",72:"h",73:"i",74:"j",75:"k",76:"l",77:"m",78:"n",79:"o",80:"p",81:"q",82:"r",83:"s",84:"t",85:"u",86:"v",87:"w",88:"x",89:"y",90:"z",186:";",187:"=",188:",",189:"-",190:".",191:"/",192:"`",219:"[",220:"\\",221:"]"};
+keyCodeToChar = {8:"Backspace",32:"Space",13:"Enter",46:"Delete",48:"0",49:"1",50:"2",51:"3",52:"4",53:"5",54:"6",55:"7",56:"8",57:"9",65:"a",66:"b",67:"c",68:"d",69:"e",70:"f",71:"g",72:"h",73:"i",74:"j",75:"k",76:"l",77:"m",78:"n",79:"o",80:"p",81:"q",82:"r",83:"s",84:"t",85:"u",86:"v",87:"w",88:"x",89:"y",90:"z",186:";",187:"=",188:",",189:"-",190:".",191:"/",192:"`",219:"[",220:"\\",221:"]"};
 
 let typed = '';
 
@@ -18,10 +18,12 @@ function keydown(e) {
           lineLength--
           typed = typed.slice(0, -1)
           blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)'
-
-      }
-      console.log ('NOL: ', numberOfLines, 'LL: ',lineLength)
-    } else{ if (keyCodeToChar[e.which] != null){
+        }
+      }else if (keyCodeToChar[e.which] == 'Space' && lineLength >= 1){
+              terminal.innerText += '\u00A0'; 
+              lineLength++ ; 
+              typerCounter++ ;
+      }else{ if (keyCodeToChar[e.which] != null){
         speed = 10;
         typed+=keyCodeToChar[e.which]
                 typerCounter = 0;
@@ -51,6 +53,10 @@ const registernewSubmittion = (submission) => {
     iframe.src = 'http://whirr-login.herokuapp.com/';
     text = '¶¶loading '+ submission +'.....¶¶';
     loadNewResource()
+  }else if(submission == 'ppsqft-chicago'){
+    iframe.src = 'https://travis1282.github.io/PPSQFT-Chicago/';
+    text = '¶¶loading '+ submission +'.....¶¶';
+    loadNewResource()
   }else if(submission == 'agent-link'){
     iframe.src = 'http://realestateleadgenerator.herokuapp.com';
     text = '¶¶loading '+ submission +'.....¶¶';
@@ -58,9 +64,44 @@ const registernewSubmittion = (submission) => {
   }else if(submission == 'bird-city'){
     iframe.src = 'https://travis1282.github.io/Bird-City/';
     text = '¶¶loading '+ submission +'.....¶¶';
-    loadNewResource()
+    loadNewResource()  
+  }else if(submission == 'about-me'){
+      terminal.innerText += '\n';
+      terminal.innerText += about;
+      terminal.innerText += '\n\n';
+      window.scrollTo(0,document.body.scrollHeight);
+      lineLength = 0;       
+      blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
+  }else if(submission == 'whirr-about'){
+      terminal.innerText += '\n';
+      terminal.innerText += whirr;
+      terminal.innerText += '\n\n';
+      window.scrollTo(0,document.body.scrollHeight);
+      lineLength = 0;       
+      blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
+  }else if(submission == 'ppsqft-chicago-about'){
+      terminal.innerText += '\n';
+      terminal.innerText += ppsqftchicago;
+      terminal.innerText += '\n\n';
+      window.scrollTo(0,document.body.scrollHeight);
+      lineLength = 0;       
+      blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
+  }else if(submission == 'agent-link-about'){
+      terminal.innerText += '\n';
+      terminal.innerText += agentlink;
+      terminal.innerText += '\n\n';
+      window.scrollTo(0,document.body.scrollHeight);
+      lineLength = 0;       
+      blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
+  }else if(submission == 'bird-city-about'){
+      terminal.innerText += '\n';
+      terminal.innerText += birdcity;
+      terminal.innerText += '\n\n';
+      window.scrollTo(0,document.body.scrollHeight);
+      lineLength = 0;       
+      blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
    }else{
-      text = "¶¶\'"+ submission+"\' is not a command¶¶"
+      text = "¶¶\'"+ submission+"\' is not a command¶¶use: about-me, git, linkedin, sqft-chicago, sqft-chicago-about, whirr, whirr-about, agent-link, agent-link-about bird-city, bird-city-about¶"
       speed = 1;
       waiting = false;
       draw();

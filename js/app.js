@@ -24,9 +24,23 @@ xhr.onreadystatechange = function() {
         if ((document.cookie) == ''){ /// if there is no cookie
         	 text = 'First login: '+ (today.toGMTString().slice(0,-3)) +' on ' +ip+'¶';
         }else{
-		    var decodedCookie = decodeURIComponent(document.cookie);
-		    var ca = decodedCookie.split(';');
-		    text = 'Last login:'+ (ca[1].replace("name=", "")+'¶');
+		    let decodedCookie = decodeURIComponent(document.cookie);
+		    let ca = decodedCookie.split(';')
+
+				    let name = "name=";
+				    for(let i = 0; i < ca.length; i++) {
+				        let c = ca[i];
+				        while (c.charAt(0) == ' ') {
+				            c = c.substring(1);
+				        }
+				        if (c.indexOf(name) == 0) {
+				        	text = 'Last login:'+ (c.replace("name=", "")+'¶');
+
+				        }
+				    }
+		
+				// }console
+
 		}	
 		now = today.toGMTString().slice(0,-3)
 		today.setTime(today.getTime() + 31600000000);
@@ -47,7 +61,7 @@ xhr.send(null);
 window.onresize = (event) => {
   	brouserWidth = (window.innerWidth-70)/10;
   	brouserHeight = (window.innerHeight-70)/20;
-  	console.log(brouserWidth + ' px width', brouserHeight + ' px height');
+  	// console.log(brouserWidth + ' px width', brouserHeight + ' px height');
 };
 
 
@@ -90,26 +104,25 @@ const printChar = (charicters)=>{
 	// }else 
 	if (textArray.length >= typerCounter){ // adds text 
 		if (textArray[typerCounter] == ' '){// handle spaces
-				terminal.innerText += '\u00A0'; 
-			}else if (textArray[typerCounter] === '¶'){
-			 	numberOfLines++ ;
-			 	lineLength = 0;				
-			 	blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
-			 	terminal.innerText += '\n';
-			}
-			else if(textArray[typerCounter] != null ){// inputs text to dom 
-				terminal.innerText += textArray[typerCounter];
-				blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
-
-			}else  { // end of inputsut 
-				navagation()   
-				// text = nextLoad
-				typerCounter = -1
-				lineLength--
-				console.log(text)
-			}
-			lineLength++ ; 
-			typerCounter++ ;
+			terminal.innerText += '\u00A0'; 
+		}else if (textArray[typerCounter] === '¶'){
+		 	numberOfLines++ ;
+		 	lineLength = 0;				
+		 	blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
+		 	terminal.innerText += '\n';
+		}
+		else if(textArray[typerCounter] != null ){// inputs text to dom 
+			terminal.innerText += textArray[typerCounter];
+			blinker.style.transform ='translateX('+ lineLength * 9.6 +'px)';
+			window.scrollTo(0,document.body.scrollHeight);
+		}else  { // end of inputsut 
+			navagation()   
+			// text = nextLoad
+			typerCounter = -1
+			lineLength--
+		}
+		lineLength++ ; 
+		typerCounter++ ;
 	}
 
   };
@@ -122,6 +135,7 @@ function draw() {
         requestAnimationFrame(draw);
 		if (waiting === false) {
 			printChar(text)
+			speed = 1;
 		}else{ 
 			// console.log(waiting)
 			speed = 500;
@@ -141,30 +155,69 @@ function draw() {
 // }
 
 //////////////// INITIALIZE TEXT TO BE PRINTED ////////////////
-
-
 const navagation = () => {
-	if (nextLoad == intro){
-		text = intro; 
-		console.log(text);
-	    waiting = false;
-	    speed = 1;
-	    nextLoad = about
-	}else if(nextLoad == about){
-		text = nextLoad; 
-		console.log(text);
-	    waiting = false;
-	    speed = 1;
-	    nextLoad = shellInstructions;
-	}else if(nextLoad == shellInstructions){
-		text = nextLoad; 
-		console.log(text);
-	    waiting = false;
-	    speed = 1;
-	    nextLoad = 'stop';
-	}else if(nextLoad == 'stop'){
-		waiting = true
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+	
+		if (nextLoad == intro){
+			text = intro; 
+			console.log(text);
+		    waiting = false;
+		    speed = 1;
+		    nextLoad = contact
+		}else if(nextLoad == contact){
+			text = nextLoad; 
+			console.log(text);
+		    waiting = false;
+		    speed = 1;
+		    nextLoad = shellInstructions;
+		}else if(nextLoad == shellInstructions){
+			text = ''
+			terminal.innerHTML += mobileShellInstructions;
+			 let nav = document.getElementsByClassName('mobileNav');
+			 for (let i = 0; i < nav.length; i++) {
+	    			nav[i].addEventListener('click', listener, false);
+	    			console.log(nav[i])
+				}
+  				// nav.addEventListener("click", listener, false);
+
+		    nextLoad = 'stop';
+		}else if(nextLoad == 'stop'){
+			waiting = true
+		}
+	
+}else{
+		if (nextLoad == intro){
+			text = intro; 
+			console.log(text);
+		    waiting = false;
+		    speed = 1;
+		    nextLoad = contact
+		}else if(nextLoad == contact){
+			text = nextLoad; 
+			console.log(text);
+		    waiting = false;
+		    speed = 1;
+		    nextLoad = shellInstructions;
+		}else if(nextLoad == shellInstructions){
+			text = nextLoad; 
+			console.log(text);
+		    waiting = false;
+		    speed = 1;
+		    nextLoad = 'stop';
+		}else if(nextLoad == 'stop'){
+			waiting = true
+		}
 	}
+}
+
+
+const listener = (e) => {
+	let path = e.path[0];
+	console.log("hello")
+	console.log(path.id)
+	registernewSubmittion(path.id)
+	
 }
 
 
